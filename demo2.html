@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/demo2.css" />
+
+  <title>Web - Basic</title>
+</head>
+
+<body>
+  <div class="main">
+    <div class="main-chil">
+      <form action="">
+        <div class="form-top m-bt-2">
+          <h1>Phát sinh mảng và tính toán</h1>
+        </div>
+        <div class="form-center m-bt-2">
+          <div>
+            <label>Nhập số phần tử:</label>
+            <input type="number" id="input_number" required />
+          </div>
+          <label for=""></label>
+          <button type="button" onclick="check_number()">
+            Phát sinh và tính toán
+          </button>
+        </div>
+        <div class="form-bottom m-bt-2">
+          <div class="m-bt-10">
+            <label>Mảng: </label>
+            <textarea id="input_arr" cols="26" rows="2" disabled></textarea>
+          </div>
+          <div class="m-bt-10">
+            <label>Max: </label>
+            <input id="input_max" disabled />
+          </div>
+          <div class="m-bt-10">
+            <label>Min: </label>
+            <input id="input_min" disabled />
+          </div>
+          <div class="m-bt-10">
+            <label>Tổng mảng: </label>
+            <input id="input_sum" disabled />
+          </div>
+          <label style="width: auto; color: red; font-style: italic">
+            Các giá trị trong mảng nằm trong khoảng từ 1 đến 100
+          </label>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+
+    function check_number() {
+      let input_so = document.getElementById("input_number");
+      let so = parseInt(input_so.value);
+      if (so > 0) {
+        del_class();
+        let err = document.getElementsByClassName("div-err");
+        if(err.length > 0){
+          err.remove();
+        }
+        let pt;
+        let mang = [];
+        for (let i = 1; i <= so; i++) {
+          pt = getRanDom(1, 100);
+          /**
+           * kiểm tra nếu chưa tồn tại pt trong mảng
+           * thì thêm pt đó vào mảng
+           * nếu đã tồn tại thì không làm gì cả
+           * */
+          if (mang.includes(pt) == false) {
+            mang.push(pt);
+          }
+        }
+        //in mảng
+        print_arr(mang);
+        //tìm Max
+        min_arr(mang);
+        //tìm min
+        max_arr(mang);
+        //Tổng mảng
+        sum_arr(mang);
+      } else {  
+        input_so.insertAdjacentHTML('afterend','<div id="id-err" class="div-err"><label></label><span class="span-error">*Số phần tử phải lớn hơn hoặc bằng 1</span></div>');  
+        document.getElementById("input_arr").value = "";
+        document.getElementById("input_min").value = "";
+        document.getElementById("input_max").value = "";
+        document.getElementById("input_sum").value = "";
+          // alert('Số phần tử phải lớn hơn hoặc bằng 1');        
+      }
+    }
+
+    //lấy gái trị random từ min đến max
+    function getRanDom(min, max) {
+      return Math.floor(Math.random() * max + min);
+    }
+    //in mảng
+    function print_arr(arr) {
+      let chuoi = "";
+      for (let i = 0; i < arr.length; i++) {
+        chuoi += arr[i] + " ";
+      }
+      document.getElementById("input_arr").value = chuoi;
+    }
+    //tìm Max
+    function min_arr(mang) {
+      let min = Math.min.apply(Math, mang);
+      document.getElementById("input_min").value = min;
+    }
+    //tìm min
+    function max_arr(mang) {
+      let max = Math.max.apply(Math, mang);
+      document.getElementById("input_max").value = max;
+    }
+    //Tổng mảng
+    function sum_arr(mang) {
+      let sum = 0;
+      for (let i = 0; i < mang.length; i++) {
+        sum += mang[i];
+      }
+      document.getElementById("input_sum").value = sum;
+    }
+
+    // xóa các element có class là div-err
+    function del_class() {
+      let errs = Array.from(document.getElementsByClassName('div-err'));
+      errs.forEach(err => {
+        err.remove();
+      });
+    }
+
+
+  </script>
+</body>
+
+</html>
